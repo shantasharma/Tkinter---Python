@@ -1,0 +1,169 @@
+import tkinter as tk
+from PIL import ImageTk, Image
+from tkinter import ttk
+from tkinter import messagebox
+
+import os
+
+root = tk.Toplevel()
+root.geometry('500x500')
+c = tk.Canvas(root, bg = 'light green', height = 230, width = 500)
+w = c.create_text(400,100,fill="darkblue",font="Times 22 italic bold",
+                        text="We\n deliver \nit\n fresh!")
+root.config(background = "green")
+c.pack()
+
+path = "C:/Users/DELL/Desktop/New folder/pygrocey.jpg"
+img = ImageTk.PhotoImage(Image.open(path))
+panel = tk.Label(root, image = img)
+panel.place(x = 0, y = 0)
+
+tree = ttk.Treeview(root)
+
+tree["columns"] = ("Fruits", "Amounty","Grocery", "Amount")
+tree.column("Fruits", width=80)
+tree.column("Amounty", width=70)
+tree.column("Grocery", width=80)
+tree.column("Amount", width=70)
+tree.heading("Fruits", text="Fruits")
+tree.heading("Amounty", text="Amount")
+tree.heading("Grocery", text="Grocery")
+tree.heading("Amount", text="Amount")
+
+### insert format -> insert(parent, index, iid=None, **kw)
+### reference: https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview
+tree.insert("", 0, text="Choose what you want", values=("Apples", "50", "Namkeen", "50"))
+tree.insert("", 1, text=" ", values=("Mangoes", "90", "Bread", "30"))
+tree.insert("", 2, text=" ", values=("Bananas", "40","eggs", "40"))
+tree.insert("", 3, text=" ", values=("Grapes", "100", "Masalabox", "100"))
+### insert sub-item, method 1
+id2 = tree.insert("", "end", "Vegetables", text="Vegetables")
+tree.insert(id2, "end", text="Choose what you want", values=("Potato", "40"))
+tree.insert(id2, "end", text="", values=("Tomato", "50"))
+tree.insert(id2, "end", text="", values=("Cabbage", "70"))
+### insert sub-item, method 2
+id3 = tree.insert("", "end", "Canned Food", text="Canned Food")
+tree.insert(id3, "end", text="Choose what you want ", values=("Chicken", "100"))
+tree.insert(id3, "end", text="", values=("Fish", "80"))
+tree.insert(id3, "end", text=" ", values=("Beans", "70"))
+
+##menu
+menu = tk.Menu(root) 
+root.config(menu=menu) 
+filemenu = tk.Menu(menu) 
+menu.add_cascade(label='File', menu=filemenu) 
+filemenu.add_command(label='New') 
+filemenu.add_command(label='Open...') 
+filemenu.add_separator() 
+filemenu.add_command(label='Exit', command=root.quit) 
+helpmenu = tk.Menu(menu)
+menu.add_cascade(label='Help', menu=helpmenu)
+aboutmenu = tk.Menu(menu)
+menu.add_cascade(label='About', menu=aboutmenu)
+aboutmenu.add_command(label='TroubleShooter') 
+helpmenu.add_command(label='About') 
+
+
+
+def func():
+    master = tk.Tk()
+    master.geometry('500x1000')
+
+
+    ## name
+    label = tk.Label(master, text = "Please Fill in the following details ",font =('Verdana', 10)).place(x = 10,y = 20)
+    label = tk.Label(master, text = "Name",font =('Verdana', 10)).place(x = 10,y = 70)
+    tk.Entry(master).place(x = 150, y = 70)
+    
+    
+    ##email
+    label = tk.Label(master, text = "email-id",font =('Verdana', 10)).place(x = 10,y = 100)
+    tk.Entry(master).place(x = 150, y = 100)
+
+    ##number of items
+    label = tk.Label(master, text = "phone number",font =('Verdana', 10)).place(x = 10,y = 130)
+    tk.Entry(master).place(x = 150, y = 130)
+
+    ##time
+    label = tk.Label(master, text = "Delivery time 9:00 to 18:00",font =('Verdana', 10)).place(x = 10,y = 160)
+    spin = tk.Spinbox(master, from_= 9, to = 18)    
+    spin.place(x = 10, y = 180)  
+    ##tk.ttk.Combobox(master, values=["October", "November"]).place(x = 180, y = 230 )
+
+    
+        
+    ##
+    label = tk.Label(master, text = "Please select the vegetables ",font =('Verdana', 10)).place(x = 10,y = 210)
+    chkValue = tk.BooleanVar() 
+    chkValue.set(True)
+    chkExample = tk.Checkbutton(master, text='Potato', var=chkValue).place(x = 10, y = 230)
+
+    chkValue0 = tk.BooleanVar() 
+    chkValue0.set(True)
+    chkExample = tk.Checkbutton(master, text='Toamto', var=chkValue0).place(x = 10, y = 250)
+
+    chkValue1 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Cabbage', var=chkValue1).place(x = 10, y = 270)
+    
+    label = tk.Label(master, text = "Please select the fruits ",font =('Verdana', 10)).place(x = 10,y = 300)
+
+    chkValue2 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Mangoes', var=chkValue2).place(x = 10, y = 320)
+
+    chkValue3 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Apples', var=chkValue3).place(x = 10, y = 340)
+
+    chkValue4 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='grapes', var=chkValue4).place(x = 10, y = 360)
+    
+    chkValue5 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Bananas', var=chkValue5).place(x = 10, y = 380)
+    
+    label = tk.Label(master, text = "Grocery ",font =('Verdana', 10)).place(x = 10,y = 410)
+    
+    chkValue6 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Namkeen', var=chkValue6).place(x = 10, y = 430)
+
+    chkValue7 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Bread', var=chkValue7).place(x = 10, y = 450)
+
+    chkValue8 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='eggs', var=chkValue8).place(x = 10, y = 470)
+    
+    chkValue9 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Masala box', var=chkValue9).place(x = 10, y = 490)
+    
+    label = tk.Label(master, text = "Canned food ",font =('Verdana', 10)).place(x = 10,y = 520)
+    chkValue12 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Chicken', var=chkValue12).place(x = 10, y = 540)
+
+    chkValue10 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Fish', var=chkValue10).place(x = 10, y = 560)
+
+    chkValue11 = tk.BooleanVar() 
+    chkExample = tk.Checkbutton(master, text='Beans', var=chkValue11).place(x = 10, y = 580)
+    
+    
+    
+    label = tk.Label(master, text = "We accept payment through: ",font =('Verdana', 10)).place(x = 10,y = 600)
+    lst = ["Cash","Debit Card", "Credit Card", "Bank Transfer","PhonePay", "PayPal", "Gpay"]
+    mylist = tk.Listbox(master) 
+    for i in range(len(lst)): 
+        mylist.insert(tk.END, lst[i]) 
+    mylist.place(x = 10, y = 620)
+
+    label = tk.Label(master, text = "Please Enter your choice",font =('Verdana', 10)).place(x = 200,y = 670)
+    tk.Entry(master).place(x = 200, y = 690)
+
+    def message():
+        messagebox.showinfo("Information", "Your request has been recorded. You will be recieving a message shortly regarding confirmation and a link for payment\nThankyou")
+        master.destroy()
+    tk.Button(master, text = "Submit", command = message).place(x = 250, y = 750)
+
+
+    master.mainloop() 
+
+button = tk.Button(root, text = "ORDER??", command = func).place(x = 250, y = 470)
+
+tree.pack()
+root.mainloop()
